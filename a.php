@@ -16,12 +16,16 @@ if ($block != "") {
 $file = file('srv1log.txt');
 $filepath = 'srv1log.txt';
 function getLineWithString($file, $str) {
+	$retVal = "";
     foreach ($file as $lineNumber => $line) {
         if (strpos($line, $str) !== false) {
-            return "$lineNumber#$line";
+        	$retVal = "$lineNumber#$line";
         }
     }
-    return -1;
+    if( $retVal == ""){
+	    return -1;
+    }
+    return $retVal;
 }
 function checkblock($ip) {
 	global $blockedfile;

